@@ -90,7 +90,7 @@ is used when dynamically loading classes as plugins.
 
 .. code-block:: java
 
-   public class MyCalibration {
+   public class MyCalibration extends DetectorMonitoring {
    	  public MyCalibration(){
 	  	 super("MYCALIB","1.0","developer");
 	  }
@@ -101,7 +101,7 @@ is used when dynamically loading classes as plugins.
 	      getDir().addDirectory(myHist);
 	  }
 
-	  public abstract void processEvent(EvioDataEvent event){
+	  public void processEvent(EvioDataEvent event){
 	     if(event.hasBank("TFOF1A::dgtz")==true){
 		EvioDataBank bank = (EvioDataBank) event.getBank("FTOF1A::dgtz");
 		for(int i = 0; i < bank.rows(); i++){
@@ -113,7 +113,7 @@ is used when dynamically loading classes as plugins.
 	     }
 	  }
 	  
-    	  public abstract void analyze(){
+    	  public  void analyze(){
 	  	 F1D func = new F1D("gaus",0.0,3000.0);
 		 func.setParameter(0,100.0);
 		 func.setParameter(1,600.0);
@@ -154,7 +154,7 @@ a standard event.
 	parser.readNext();
 	int nrows = parser.rows();
 	EvioDataEvent  event = EvioFactory.createEvioEvent();
-	EvioDataBank   bankFTOF = (EvioDataBank) event.createBank("FTOF1A",nrows);
+	EvioDataBank   bankFTOF = (EvioDataBank) event.createBank("FTOF1A::dgtz",nrows);
 	for(int loop = 0; loop < nrows; loop++){
 		bankFTOF.setInt("sector",loop, parser.getSector(loop));
 		bankFTOF.setInt("paddle",loop, parser.getPaddle(loop));
