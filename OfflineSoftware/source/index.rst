@@ -16,6 +16,7 @@ Contents:
    analysis/introduction
    plotting/introduction
    development/introduction
+   io/bosio
 
 ..   rootio/introduction
 ..   io/introduction
