@@ -17,6 +17,7 @@ Contents:
    plotting/introduction
    development/introduction
    io/bosio
+   io/evioraw
 
 ..   rootio/introduction
 ..   io/introduction
