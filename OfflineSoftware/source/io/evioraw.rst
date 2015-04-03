@@ -78,7 +78,7 @@ The raw data bank object will be created from the data for CRATE 4. The printout
    CHANNEL :  378
      -->   0 : PULSE (mode =  4) :      378      211        3
    CHANNEL :  867
-     -->   0 : PULSE (mode =  4) :      867      211        0
+     -->   0 : PULSE (mode =  4) :      867      211        0 
 
 
 Depending on the content of the leafs in the EVIO node, the EvioRawDataBank will create objects
@@ -90,12 +90,12 @@ hits.
 .. code-block:: java
 
     if(bank!=null){
-    List<Integer>  channels = bank.getChannelList(); // LIST of channels
-    for(Integer chan : channels){
+      List<Integer>  channels = bank.getChannelList(); // LIST of channels
+      for(Integer chan : channels){
         List<RawData>  channelData = bank.getData(chan); // List of hits for given channel
         for(RawData data : channelData){
            System.out.println("channel = " + chan + " mode = " + data.mode());
         }
+      }
     }
-   }
 

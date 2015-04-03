@@ -179,3 +179,54 @@ The following example loops through events and plots the missing mass of two pio
 
 The code loops through events and picks events corresponding to the given filter
 then gets particle for given string syntax and fills the mass histogram.
+
+
+Selecting particles
+===================
+
+PhysicsEvent object can be used to construct composite particles from the final sate 
+(as in the examples above), but it can alse be used to loop through particles with
+either given charge or given pid. Example:
+
+.. code-block:: java
+
+   ...
+   int nparticles = recEvent.count(); // returns number of particles
+   int nphotons   = recEvent.countByPid(22); // returns number of photons
+   int nneutrals  = recEvent.countByCharge(0); // return number of particles with charge=0
+   int npositive  = recEvent.countByCharge(1); // return number of particles with charge=+1
+   ...
+   if(nphotons>=2){
+      Particle  photon1 = recEvent.getParticleByPid(22,0); // skip=0, returns first photon
+      Particle  photon2 = recEvent.getParticleByPid(22,1); // skip=1, skips first and returns second photon
+      System.out.println(" mom 1 = " + photon1.mass() + "  mom 2 = " + photon2.p());
+   }
+   ...
+   for(int loop = 0; loop < npositive; loop++){
+      Particle posPart = recEvent.getParticleByCharge(1,loop); // skips loop particles to return the next one
+      if(posPart.pid()==211){
+	System.out.println(" found pion with angle = " + posPart.theta());
+      }
+   }
+   ...
+
+The loop over all particles can also be made by checking their pid:
+
+.. code-block:: java
+
+   ...
+   int nparticles = recEvent.count(); // returns number of particles
+   for(int loop=0; loop < nparticles; loop++){
+      Particle part = recEvent.getParticle(loop);
+      if(part.pid()==2212){
+	System.out.println(" found proton in row " + loop);
+	System.out.println(" vertex Z = " + part.vertex().z() );
+      }
+   }
+   ...
+
+Working with Particles
+======================
+
+The implementation of Particle class provides operations with particles, such as combine them,
+calculating vertex or matching particles. (Examples SOON).
