@@ -179,3 +179,80 @@ will look like:
 
 .. image:: images/directory-browser.png
 
+Working with NTuples
+====================
+
+An NTuple object is a simple tuple with named columns that can be used to plot
+variables with given selection into 1D or 2D histograms. The ntuples can be saved into
+an EVIO file, and TBrowser object can open tuple tree from EVIO file and from a simple
+text file. To produce an NTuple use the following example:
+
+.. code-block:: java
+
+  import org.root.group.*;
+  import org.root.func.*;
+  import org.root.data.*;
+  import org.root.histogram.*;
+
+  F1D f1 = new F1D("gaus+p2",0.0,14.0);
+  f1.setParameter(0,120.0);
+  f1.setParameter(1,  8.2);
+  f1.setParameter(2,  1.2);
+  f1.setParameter(3, 24.0);
+  f1.setParameter(4,  7.0);
+  RandomFunc rndm = new RandomFunc(f1);
+
+  NTuple T = new NTuple("T","id:x:y"); // define ntuple with 3 columns
+  double[] vars = new double[3];
+
+  for(int i = 0; i < 340000; i++){
+   vars[0] = (double) i;
+   vars[1] = rndm.random();
+   vars[2] = rndm.random(); 
+   T.addRow(vars); // fill ntuple with one row
+  }
+
+  T.write("myfirstntuple.evio"); // save to output file
+  TBrowser browser = new TBrowser(T); // view in the browser
+
+The saved ntuple file can be opened in the TBrowser by menu "File/Open".
+Double clicking the branches of the ntuple will plot the variables into 1D 
+histogram. For more plotting options use "Edit/Tree Selector". This will allow
+plotting 2D histograms with an option to cut on the variables. Following plot 
+shows plotting x vs y variable.
+
+.. image:: images/ntuple-draw-nocut.png 
+
+
+In this plot a condition "x<12&y>6" was applied, shown in the cut input string.
+NOTE, singel "&" or "|" are used for AND and OR operations.
+The 1D histograms are plotted if X and Y are chosen to be the same variable.
+
+.. image:: images/ntuple-draw-cut.png
+
+To read the ntuple from an EVIO file, an empty ntuple first has to be declared
+with some set of variables then variables will be overwritten from the definition
+in the file:
+
+.. code-block:: java
+
+  NTuple R = new NTuple("R","a:b");
+  R.open("myfirstntuple.evio");
+  R.scan(); // prints out variables and values
+
+Here is sample printout from NTuple.scan() function:
+
+.. code-block:: bash
+
+
+ ***************************************************************************************
+ * NTUPLE [                       R]  ENTRIES         339999                           *
+ ***************************************************************************************
+ *   variable      *            min *            max *           mean *            rms *
+ ***************************************************************************************
+ *   id            *   0.000000e+00 *   3.399980e+05 *   1.699990e+05 *   9.814926e+04 *
+ *   x             *   3.537861e-02 *   1.396500e+01 *   8.470157e+00 *   3.248241e+00 *
+ *   y             *   3.507701e-02 *   1.396499e+01 *   8.489932e+00 *   3.240686e+00 *
+ ***************************************************************************************
+
+
