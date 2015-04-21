@@ -16,9 +16,10 @@ Contents:
    analysis/introduction
    plotting/introduction
    development/introduction
+   io/clasio.rst
    io/bosio
    io/evioraw
-
+   
 ..   rootio/introduction
 ..   io/introduction
 ..   services/introduction
