@@ -46,4 +46,21 @@ to start development is located on clas maven repository:
    
    http://clasweb.jlab.org/clas12maven/org/jlab/coat/coat-libs/1.0-SNAPSHOT/
 
+Packages in CoatJava
+====================
+
+Here is the list of packages that coatjava distribution contains with links to their javadoc page:
+
+  +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
+  | Package         |   Description                           |                  Documentation Link                                                 |
+  +=================+=========================================+=====================================================================================+
+  |  clas-geometry  |  CLAS geometry Package                  |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-geometry/>              |
+  +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
+  |  clas-io        |  CLAS EVIO I/O Package                  |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-io/>                    |
+  +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
+  | clas-physics    | Physics Toolkit Library                 |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-physics/>               |
+  +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
+  | jroot           | Java Plotting Library                   |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-physics/>               |
+  +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
+
 
