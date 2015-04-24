@@ -1,9 +1,8 @@
 
-.. _clasio-intro:
+.. _clasio-reading:
 
-*************************
-JAVA Input/Output Library
-*************************
+Reading/Writing Dictionary based files
+**************************************
 
 CLAS/IO library is a java package developed to handle input/output of the 
 common data types used in CLAS. The interface is implemented to make codes

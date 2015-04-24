@@ -3,23 +3,56 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to CLAS-12 documentation!
-=======================================
+CLAS12 Offline software documentation
+=====================================
 
-Contents:
+Welcome to CLAS12 offline software documentation. This section contains topical 
+documentation on offline common tools used for building CLAS12 reconstruction
+and calibration software. 
+
+Standard Java Library For CLAS12:
+---------------------------------
 
 .. toctree::
-   :maxdepth: 0
+   :maxdepth: 1
 
    gettingstarted/introduction
-   reconstruction/introduction
-   analysis/introduction
-   plotting/introduction
-   development/introduction
-   io/clasio.rst
+
+CLAS12 Input/Output Packages:
+-----------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+   io/readingRawEvioFiles
+   io/clasio
    io/bosio
-   io/evioraw
-   
+
+Plotting Package:
+-----------------
+
+.. toctree::
+   :maxdepth: 1
+
+   plotting/introduction
+
+
+Code Development:
+-----------------
+
+.. toctree::
+   :maxdepth: 1
+
+   development/introduction
+
+..   reconstruction/introduction
+..   analysis/introduction
+
+..   io/clasio.rst
+..   io/bosio
+..   io/evioraw
+
+
 ..   rootio/introduction
 ..   io/introduction
 ..   services/introduction

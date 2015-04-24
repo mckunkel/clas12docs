@@ -1,9 +1,8 @@
 
 .. _clasio-bosio:
 
-****************************
-CLAS12 Input/Output Library
-****************************
+Reading BOS files with Java I/O package
+***************************************
 
 The design of CLAS I/O library allows implementation of different 
 formats with same interface. And there is a BOS reader implemented

@@ -1,6 +1,6 @@
 
-Getting Started
-***************
+Getting Started with Java Software
+**********************************
 
 Required Software
 =================
@@ -9,7 +9,7 @@ CLAS12 software package is written in JAVA and to run the codes and scripts Java
 To run example scripts groovy package is required. To run on local machines user must install JDK 7
 package and groovy.
 
-Running On Jlab CUE 
+Running On Jlab CUE
 ===================
 
 To use latest version of coatjava (CLAS reconstruction package) on CUE environment must be initialized
@@ -60,7 +60,7 @@ Here is the list of packages that coatjava distribution contains with links to t
   +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
   | clas-physics    | Physics Toolkit Library                 |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-physics/>               |
   +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
-  | jroot           | Java Plotting Library                   |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-physics/>               |
+  | jroot           | Java Plotting Library                   |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/jroot/>                      |
   +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
 
 
