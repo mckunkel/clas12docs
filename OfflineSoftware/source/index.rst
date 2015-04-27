@@ -18,6 +18,16 @@ Standard Java Library For CLAS12:
 
    gettingstarted/introduction
 
+
+CLAS12 Simulation/Reconstruction
+---------------------------------
+
+.. toctree::
+   :maxdepth: 1
+   
+   reconstruction/introduction
+   analysis/introduction
+
 CLAS12 Input/Output Packages:
 -----------------------------
 

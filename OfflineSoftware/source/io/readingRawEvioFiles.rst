@@ -183,5 +183,90 @@ all crated that belong to given detector.
 
 
 The returned list is a subset of the original list of hits for which translation table
-returns getSector(crate,slot,channel) >= 0. 
+returns getSector(crate,slot,channel) >= 0. Implementation of a new translation table class
+is only neccessary in cases when the mapping is not trivial or if the representation of 
+translation table in the file will be too large. The abstract translation table class has methods 
+to read a translation file and do translation based values from the table. The file format for
+table is given as an example:
 
+.. code-block:: bash
+
+  #-----------------------------------------------------------------------------
+  # TRANSLATION TABLE
+  #-----------------------------------------------------------------------------
+  # Detector - Sector - Layer - Component - CRATE - SLOT - CHANNEL
+  #-----------------------------------------------------------------------------
+  FTCAL      1      1      0      4      3     0
+  FTCAL      2      1      0      4      3     1
+  FTCAL      3      1      0      4      4     2
+  FTCAL      4      1      0      4      4     3
+  FTCAL      5      1      0      4      5     4
+  ...
+  ...
+
+To read this table (say names FTCAL.table) use the standard abstract translation table class:
+
+.. code-block:: java
+
+  ...
+  AbsDetectorTranslationTable  trTable = new  AbsDetectorTranslationTable("FTCAL",900);
+  trTable.readFile("FTCAL.table");
+  System.out.println(trTable); // printout the content of the table
+  ...
+
+Writing an output file
+======================
+
+Here is a complete code showing how to implement a decoder program for one given detector.
+
+.. code-block:: java
+
+   import org.jlab.evio.clas12.*;
+   import org.jlab.clas12.raw.*;
+   import org.jlab.io.decode.*;
+
+   String inputFile  = args[0];
+   String outputFile = "mydecoded_data.evio";
+
+   AbsDetectorTranslationTable  trTable = new  AbsDetectorTranslationTable("FTCAL",900);
+
+   trTable.readFile("FTCAL.table");
+   
+   EvioRawEventDecoder    decoder = new  EvioRawEventDecoder();
+   EvioRawDataSource       reader = new EvioRawDataSource();
+   reader.open(inputFile);
+
+   EvioDataSync  writer = new EvioDataSync();
+   writer.open(outputFile);
+
+   while(reader.hasEvent()){
+      EvioDataEvent event = reader.getNextEvent();
+      List<RawDataEntry> dataEntries = reader.getDataEntries(evioEvent);
+      if(dataEntries != null){
+        List<RawDataEntry>  ftcalData = decoder.getDecodedData(dataEntries,trTable);
+        int nrows = ftcalData.size();
+        if(nrows>0){
+          EvioDataEvent  outEvent = writer.createEvent(EvioFactory.getDictionary());
+          EvioDataBank   bank     = outEvent.createBank("FTCAL::dgtz",nrows);
+          for(int loop = 0; loop < nrows; loop++){
+             int idx = ftcalData.get(loop).getComponent() % 22;
+             int idy = ftcalData.get(loop).getComponent() / 22;
+             int TDC = ftcalData.get(loop).getTDC();
+             int ADC = ftcalData.get(loop).getADC();
+             bank.setInt("idx",loop,idx);
+             bank.setInt("idy",loop,idy);
+             bank.setInt("ADC",loop,ADC);
+             bank.setInt("TDC",loop,TDC);
+          }
+          outEvent.appendBanks(bank);
+          writer.writeEvent(outEvent);
+        }
+      }
+    reader.list(event);
+   }
+
+   reader.close();
+   writer.close();
+
+This program will read raw hits from all crates, then decoded array will contain only hits from
+FTCAL which have entries in the translation table, then these hits will be written into the event.
