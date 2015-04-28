@@ -46,6 +46,14 @@ Plotting Package:
 
    plotting/introduction
 
+Geometry Package:
+-----------------
+
+.. toctree::
+   :maxdepth: 1
+
+   geometry/geometryprimitives
+   geometry/geometrycontainers
 
 Code Development:
 -----------------
