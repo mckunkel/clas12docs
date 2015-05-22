@@ -88,6 +88,11 @@ Where **name** points to the name (with path) of the detector system and **varia
 To remove a detector simply remove or comment its corresponding line.
 
 
+.. note::
+
+ The true information for each system is saved in the output with the **INTEGRATEDRAW** - by default it would otherwise not be saved.
+
+
 Using the internal generator
 ============================
 
