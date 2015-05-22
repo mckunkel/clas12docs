@@ -24,9 +24,11 @@ CLAS12 Simulation/Reconstruction
 
 .. toctree::
    :maxdepth: 1
-   
+
+   gemc/runningGemc   
    reconstruction/introduction
    analysis/introduction
+   reconstruction/fastMonteCarlo
 
 CLAS12 Input/Output Packages:
 -----------------------------
