@@ -63,6 +63,7 @@ Code Development:
 .. toctree::
    :maxdepth: 1
 
+   calibration/monitoringPlugins
    development/introduction
 
 ..   reconstruction/introduction
