@@ -162,6 +162,11 @@ They both can be scaled with the **SCALE_FIELD** option. For example:
 
 will invert and scale the torus, and halve the solenoid.
 
+.. note::
+
+ The torus field is automatically loaded with the forward carriage volume. To activate the solenoid field, the option
+ <option name="HALL_FIELD"  value="clas12-solenoid"/> is needed.
+
 
 .. note::
 
