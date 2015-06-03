@@ -139,3 +139,6 @@ Here is a screenshot of the GUI:
 
 .. image:: images/monitoring-gui.png
 
+For example codes check out directory scripts/examples/calibration on how to implement calibration code in groovy.
+
+

@@ -47,6 +47,7 @@ Plotting Package:
    :maxdepth: 1
 
    plotting/introduction
+   plotting/directories_and_trees
 
 Geometry Package:
 -----------------
