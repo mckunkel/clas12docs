@@ -45,7 +45,7 @@ script will run through events in the file:
     
        import org.jlab.evio.clas12.*;
        
-       EvioSource reader = new EvioReader();
+       EvioSource reader = new EvioSource();
        reader.open("myfile.evio");
        while(reader.hasEvent()){
 	  EvioDataEvent event = reader.getNextEvent();

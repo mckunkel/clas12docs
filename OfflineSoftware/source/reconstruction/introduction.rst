@@ -68,7 +68,7 @@ Additional parameters can be passed to each reconstruction service from command 
 .. code-block:: bash
 
    bin/clas12-reconstruction -s DCHB:DCTB:FTOF:EC:EB -i gemc_output.evio -o myoutput.evio \
-    -config DCHB::torus=0.75 -config DCHB::solenoid=0.5 -config DCTB::kalman=true
+    -config MAG::torus=0.75 -config MAG::solenoid=0.5 -config DCTB::kalman=true
 
 This command line will run reconstruction with torus field scaled with 0.75 and solenoid field scaled
 with 0.5, and will run with Kalman filter. use option kalman=false to switch off Kalman filter.

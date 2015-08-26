@@ -46,7 +46,8 @@ Plotting Package:
 .. toctree::
    :maxdepth: 1
 
-   plotting/introduction
+   plotting/graph_plotting
+   plotting/histogram_plotting
    plotting/directories_and_trees
 
 Geometry Package:

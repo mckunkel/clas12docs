@@ -18,21 +18,34 @@ To read raw files one must use:
 
 .. code-block:: java
 
-   import org.jlab.evio.clas12.*;
-   import org.jlab.clas12.raw.*;
-   import org.jlab.io.decode.*;
+  import org.jlab.evio.clas12.*;
+  import org.jlab.clas12.raw.*;
+  import org.jlab.evio.decode.*;
+  import org.jlab.clas.detector.*;
 
-   outputFile = args[0];
+  outputFile = args[0];
 
-   EvioRawDataSource  reader = new EvioRawDataSource();
-   reader.open(outputFile);
+  EvioSource  reader = new EvioSource();
+  reader.open(outputFile);
 
-   while(reader.hasEvent()){
-      EvioDataEvent event = reader.getNextEvent();
-      reader.list(event);
-   }
+  EvioEventDecoder decoder = new EvioEventDecoder();
 
-   reader.close();
+  int counter = 0;
+
+  while(reader.hasEvent()){
+
+     EvioDataEvent event = reader.getNextEvent();
+     List<DetectorRawData> rawData = decoder.getDataEntries(event);
+
+     for(DetectorRawData data : rawData){
+        System.out.println(data);
+     }
+     counter++;
+  }
+
+  reader.close();
+
+
 
 This script will read each event and print out branches that correspond to crate numbers.
 The printout looks like:

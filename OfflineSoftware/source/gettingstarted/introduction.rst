@@ -20,12 +20,28 @@ to use required software do:
    ifarm> module load java_1.7
    ifarm> use groovy
 
+Starting from version 2.0 of CLAS12 software we switched to JDK 8, in order to use reconstruction package 2.0
+user must install JDK 8 on their machine, or on CUE machines load the appropriate module:
+
+.. code-block:: bash
+
+   ifarm> module load java_1.8
+   ifarm> use groovy
+
 Then downloaded coatjava package is ready to use. To use up to date development version installed on CUE 
 machines include following in command in cshrc file.
 
 .. code-block:: bash
 
-   /group/clas12/environment_java.csh
+   >source /group/clas12/environment_java.csh
+
+If using version 2.0 of CLAS12 reconstruction on CUE machines a different environment script has to be
+sourced:
+
+.. code-block:: bash
+
+   >source /group/clas12/environment_java_8.csh
+
 
 Downloading coatjava
 ====================
@@ -35,6 +51,13 @@ The packaged tarball of complete package with neccessary software and files can 
 .. code-block:: bash
 
    wget https://userweb.jlab.org/~gavalian/software/coatjava/coatjava-1.0.tar.gz
+
+To download the development version of the package use the link:
+
+.. code-block:: bash
+
+   wget https://userweb.jlab.org/~gavalian/software/coatjava/coatjava-2.0.tar.gz
+
 
 Development environment
 =======================
@@ -55,6 +78,8 @@ Here is the list of packages that coatjava distribution contains with links to t
   | Package         |   Description                           |                  Documentation Link                                                 |
   +=================+=========================================+=====================================================================================+
   |  clas-geometry  |  CLAS geometry Package                  |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-geometry/>              |
+  +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
+  |  clas-tools     |  CLAS TOOLS Package                     |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-tools/>                 |
   +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+
   |  clas-io        |  CLAS EVIO I/O Package                  |   <http://clasweb.jlab.org/clas12offline/docs/javadocs/clas-io/>                    |
   +-----------------+-----------------------------------------+-------------------------------------------------------------------------------------+

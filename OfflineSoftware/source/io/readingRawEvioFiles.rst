@@ -28,21 +28,29 @@ To read raw files one must use:
 
 .. code-block:: java
 
-   import org.jlab.evio.clas12.*;
-   import org.jlab.clas12.raw.*;
-   import org.jlab.io.decode.*;
+    import org.jlab.evio.clas12.*;
+    import org.jlab.clas12.raw.*;
+    import org.jlab.evio.decode.*;
+    import org.jlab.clas.detector.*;
 
-   outputFile = args[0];
+    outputFile = args[0];
 
-   EvioRawDataSource  reader = new EvioRawDataSource();
-   reader.open(outputFile);
+    EvioSource  reader = new EvioSource();
+    reader.open(outputFile);
 
-   while(reader.hasEvent()){
-      EvioDataEvent event = reader.getNextEvent();
-      reader.list(event);
-   }
+    EvioEventDecoder decoder = new EvioEventDecoder();
 
-   reader.close();
+    int counter = 0;
+
+    while(reader.hasEvent()){
+
+       EvioDataEvent event = reader.getNextEvent();
+       decoder.list(event);
+       counter++;
+    }
+
+    reader.close();
+
 
 This script will read each event and print out branches that correspond to crate numbers.
 The printout looks like:
@@ -72,11 +80,10 @@ a list of RawDataEntry class which has decoded information from the CRATE.
 .. code-block:: java
 
   ...
-  List<RawDataEntry> dataEntries = reader.getDataEntries(evioEvent,4);
-  if(dataEntries != null){
-    for(RawDataEntry data : dataEntries){
-          System.out.println(data);
-    }
+  List<DetectorRawData> rawData = decoder.getDataEntries(event,4);
+
+  for(DetectorRawData data : rawData){
+      System.out.println(data);
   }
   ...
 
@@ -111,11 +118,10 @@ int the call to eader.getDataEntries().
 .. code-block:: java
 
   ...
-  List<RawDataEntry> dataEntries = reader.getDataEntries(evioEvent);
-  if(dataEntries != null){
-    for(RawDataEntry data : dataEntries){
-          System.out.println(data);
-    }
+  List<DetectorRawData> rawData = decoder.getDataEntries(event);
+
+  for(DetectorRawData data : rawData){
+      System.out.println(data);
   }
   ...
 
@@ -247,7 +253,7 @@ Here is a complete code showing how to implement a decoder program for one given
         int nrows = ftcalData.size();
         if(nrows>0){
           EvioDataEvent  outEvent = writer.createEvent(EvioFactory.getDictionary());
-          EvioDataBank   bank     = outEvent.createBank("FTCAL::dgtz",nrows);
+          EvioDataBank   bank     = outEvent.getDictionary().createBank("FTCAL::dgtz",nrows);
           for(int loop = 0; loop < nrows; loop++){
              int idx = ftcalData.get(loop).getComponent() % 22;
              int idy = ftcalData.get(loop).getComponent() / 22;
