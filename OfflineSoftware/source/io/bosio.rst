@@ -12,6 +12,26 @@ format consistent with CLAS12 data format. The advantage of this
 is that all standard tools for event manipulation and cuts and corrections
 can be used with old data sets.
 
+
+Preparing to convert
+====================
+
+The BOS files created by RECSIS (CLAS-6 event reconstruction program) sometimes
+have splitted event buffers and discontinuities of BANKs within an event record.
+Java software can deal with some of the fragmentation in the FPACK format, but
+not all of them sometimes resulting in mising banks. In order to avoid this issue
+it is recomended to pass BOS file through filter which creates clean continues
+records out of BOS file. The command to filter BOS is:
+
+.. code-block:: bash
+
+   /group/clas12/packages/bos/bosutility -filter -b "HEADHEVTEVNTECPBCCPBSCPBLCPB" filtered_run_28456_A00.bos run_28456_A00.bos
+
+The "-b" option specifies which banks should be in the final filtered BOS file, 
+if needed other banks can be added as well. Note ! Banks with names shorter than 
+4 character have to be completed to 4 characters with " " (space).
+
+
 Converting BOS to EVIO
 ======================
 

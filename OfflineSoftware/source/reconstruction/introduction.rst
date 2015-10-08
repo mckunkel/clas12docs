@@ -33,26 +33,66 @@ program is called clas12-reconstruction and it accepts following arguments.
     -o          :   output file name
     -s          :   service list to run (e.g. BST:FTOF:EB )
 
+     FLAGS : use -config SYSTEM::ITEM=value syntax to pass configuration.
+
+
+   Available Configurations :
+
+     -config CCDB::GEOMRUN=10        : set ccdb run number to 10 for loading geometry
+     -config CCDB::GEOMVAR='custom'  : set ccdb variation to 'custom' for loading geometry
+     -config CCDB::CALIBRUN=10       : set ccdb run number to 10 for calibration constant
+     -config CCDB::CALIBVAR='custom' : set ccdb variation to 'custom' for calibration constants
+     -config MAG::torus=0.75         : set scale for TORUS magnet to 3/4
+     -config MAG::solenoid=0.5       : set scale for SOLENOID magnet to 1/2
+     -config DCTB::kalman=true       : enable kalman filter in time based tracking
+
+
+
+
+  DATABASE OPTIONS: 
+     to use local sqlite database type : setenv CCDB_DATABASE etc/database/clas12database.db 
+
+
+
+  SHOW AVAILABLE DETECTORS : 12
+
+
+    *****************************************************************
+    * MODULE       * AUTHOR                   *  VERSION * LANGUAGE *
+    *****************************************************************
+    * BST          * ziegler                  *      1.0 *     java *
+    * CTOF         * kenjo                    *      1.0 *     java *
+    * DCHB         * ziegler                  *      2.0 *     java *
+    * DCTB         * ziegler                  *      2.0 *     java *
+    * EB           * gavalian                 *      1.0 *     java *
+    * EC           * gavalian                 *      1.0 *     java *
+    * FMT          * ziegler                  *      1.0 *     java *
+    * FTCAL        * devita                   *      1.0 *     java *
+    * FTHODO       * devita                   *      1.0 *     java *
+    * FTMATCH      * devita                   *      1.0 *     java *
+    * FTOF         * gavalian                 *      1.0 *     java *
+    * HTCC         * henkins                  *      1.0 *     java *
+    *****************************************************************
+
+
 Services are the detector reconstruction packages, each of them can be ran
 individually or chained together. The order is important to get particles 
 reconstructed in the output. The event builder service must be the last one
-in the chain. Here is the list of available services:
+in the chain. 
 
- +--------------+-----------------------------------------+
- | Service Name |   Description                           |
- +==============+=========================================+
- |    DCHB      | Drift Chamber Hit  Based tracking       |
- +--------------+-----------------------------------------+
- |    DCTB      | Drift Chamber Time Based tracking       |
- +--------------+-----------------------------------------+
- |    TFOT      | Time Of Flight Reconstruction (1A,1B,2) |
- +--------------+-----------------------------------------+
- |    BST       | SVT Reconstruction package              |
- +--------------+-----------------------------------------+
- |    EC        | EC/PCAL reconstruction                  |
- +--------------+-----------------------------------------+
- |    EB        | Generic Event Builder package           |
- +--------------+-----------------------------------------+
+The configuration flags can be passed trhough command line, and they are described 
+in the printout. 
+
+Reconstruction program can be used offline (with no internet correction), one has 
+to specify the relative path to the sqlite database table to be used instead of mysql
+server. The local database is included in the coatjava package, and the relative
+location and the environment variable to set are described in the help printout.
+
+The printout also privides list of available plugins, the directory lib/plugins
+is scanned for classes that extend DetectorReconstruction and all are available to 
+run through reconstruction program. User developed jar files must be copied to 
+the plugins directory in order to appear in the available module list.
+
 
 To run the full chain of forward reconstruction use command:
 
