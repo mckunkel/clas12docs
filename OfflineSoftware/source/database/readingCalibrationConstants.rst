@@ -25,7 +25,8 @@ and stored as an array of strings. Example session:
 
 	// load table reads antire table and makes an array of variables for each column in the table.
 	dbprovider.loadTable("/calibration/ftof/attenuation");
-	// disconncect from databas.
+
+	// disconncect from databas. Important to do this after loading tables.
 	dbprovider.disconnect();
 
 	// printout names of columns and lengths for each variable
@@ -74,6 +75,18 @@ The environment variable CLAS12DIR also has to be set to point to the directory 
 located. All the scripts in bin directory already set CLAS12DIR to proper location, so when using
 coatjava package scripts there is no need to set it separately.
 
+
+Reading constant from provider
+------------------------------
+
+To loop through all values in the variable use:
+
+.. code-block::      java
+
+	for(int loop = 0; loop < dbprovider.length("/calibration/ftof/attenuation/y_offset"); loop++){
+		double value = dbprovider.getDouble("/calibration/ftof/attenuation/y_offset",loop);
+		// for integer values use dbprovider.getInteger("/calibration/ftof/attenuation/y_offset",loop);
+	}
 
 Plotting Calibration Constants
 ------------------------------
