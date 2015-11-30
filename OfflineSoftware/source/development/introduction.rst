@@ -42,20 +42,32 @@ To use coat-libs package in your project you need to modify your pom.xml file as
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+
+  <repositories>
+      <repository>
+        <id>clas12maven</id>
+        <url>https://clasweb.jlab.org/clas12maven</url> 
+      </repository>
+    </repositories>
+
     <dependencies>
       <dependency>
         <groupId>org.jlab.coat</groupId>
         <artifactId>coat-libs</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.0-SNAPSHOT</version>
       </dependency>
-    </dependencies> 
+      <dependency>
+        <groupId>org.jlab.coda</groupId>
+        <artifactId>clara</artifactId>
+        <version>2.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jlab.coda</groupId>
+        <artifactId>jtools</artifactId>
+        <version>2.2</version>
+      </dependency>
+    </dependencies>
     
-    <repositories>
-      <repository>
-        <id>clas12maven</id>
-        <url>https://clasweb.jlab.org/clas12maven</url>
-      </repository>
-    </repositories>
     </project>   
 
 

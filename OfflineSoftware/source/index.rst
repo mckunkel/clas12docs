@@ -75,6 +75,7 @@ Code Development:
 
    calibration/monitoringPlugins
    development/introduction
+   calibration/calibrationModule
 
 ..   reconstruction/introduction
 ..   analysis/introduction

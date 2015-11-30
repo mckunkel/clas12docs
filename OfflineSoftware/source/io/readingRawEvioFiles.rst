@@ -32,24 +32,33 @@ To read raw files one must use:
     import org.jlab.clas12.raw.*;
     import org.jlab.evio.decode.*;
     import org.jlab.clas.detector.*;
+    import org.jlab.clas12.detector;
 
     outputFile = args[0];
 
+
     EvioSource  reader = new EvioSource();
-    reader.open(outputFile);
-
-    EvioEventDecoder decoder = new EvioEventDecoder();
-
-    int counter = 0;
-
+    reader.open(input);
+    EventDecoder decoder = new EventDecoder();
+    int icounter = 0;
+    
     while(reader.hasEvent()){
 
-       EvioDataEvent event = reader.getNextEvent();
-       decoder.list(event);
-       counter++;
-    }
+       icounter++;
+       EvioDataEvent event = (EvioDataEvent) reader.getNextEvent();
+       System.out.println("---------------> event  # " + icounter);
+       decoder.decode(event);
+       // The name FTOF1A comes from TRANSLATION TABLE (look below)
+       // For other detectors use decoder.getDataEntries("PCAL") for example
+       List<DetectorBankEntry> counters =  decoder.getDataEntries("FTOF1A");
+       decoder.getDetectorCounters(DetectorType.FTOF1A);
 
-    reader.close();
+       for(DetectorBankEntry cnt : counters){
+          System.out.println(cnt);
+       }
+    }
+    System.out.println("done...");
+    decoder.showTimer();
 
 
 This script will read each event and print out branches that correspond to crate numbers.
@@ -57,222 +66,100 @@ The printout looks like:
 
 .. code-block:: bash
 
-   [EVIO DATA EVENT LIST]
-   EVIO Branch tag = 4 (4) num = d7 (215)
-     evio leaf : tag = e10a (57610) num = 0 (0) length = 4
-     evio leaf : tag = e111 (57617) num = 0 (0) length = 35
-     evio leaf : tag = e10f (57615) num = 0 (0) length = 5
-
-Where tag corresponds to CRATE number and num is changing from 0 to 255 depending on the event number 
-to keep track of event sequence. The leafs have different structure and contain data read from the 
-crate. The data is written in composite bank format, and it is the branch with tag=57617 in this example.
-The tags can vary depending on the mode used to write data (raw ADC mode or Pulse ADC mode).
-The EvioRawDataSource class will automatically recognize the tags and parse them individually depending 
-on the data mode.
-
-Raw Data Banks
-==============
-
-For each CRATE an array of the hits (data) can be read from the event, the EvioRawDataSource class
-automatically detects the MODE of the data (which is based on the TAG number of the leaf) and constructs 
-a list of RawDataEntry class which has decoded information from the CRATE.
-
-.. code-block:: java
-
-  ...
-  List<DetectorRawData> rawData = decoder.getDataEntries(event,4);
-
-  for(DetectorRawData data : rawData){
-      System.out.println(data);
-  }
-  ...
-
-The code above will produce a different printout depending on which MODE data appears in the bank.
-An example printout is from SVT data bank (which is MODE=4).
-
-.. code-block:: bash
-
-  C/S/C [   4    3  2599] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      2     39    237      7]
-  C/S/C [   4    3  2910] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      3     94    238      2]
-  C/S/C [   4    5  2419] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      1    115    237      4]
-  C/S/C [   4    5   804] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     0      3     36    237      2]
-  C/S/C [   4    5   805] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     0      3     37    237      7]
-  C/S/C [   4    5  2933] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      3    117    237      5]
-  C/S/C [   4    5  3126] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      4     54    237      7]
-  C/S/C [   4    5   569] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     0      2     57    237      1]
-  C/S/C [   4    5   570] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     0      2     58    237      1]
-  C/S/C [   4    5   806] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     0      3     38    238      0]
-  C/S/C [   4    5  2365] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      1     61    238      1]
-  C/S/C [   4   17  2337] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      1     33    237      4]
-  C/S/C [   4   17  2374] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      1     70    237      3]
-  C/S/C [   4   17  3114] S/L/C [   0    0     0]  SVT H/CID/C/T/A [     1      4     42    237      5]
-
-In this printout first 3 numbers are CRATE/SLOT/CHANNEL combination. The second set of 3 numbers are 
-SECTOR/LAYER/COMPONENT which initally are set to '0' since no translation table was yet applied to the 
-list of the hits. Following numbers are dependnent on which MODE the data is in, in this exmaple there 
-are HALF/CHIPID/COMPONENT/TDC/ADC.
-
-It is possible to read all entries from all CRATES available in the EVENT, one has to ommit the CRATE parameter
-int the call to eader.getDataEntries().
-
-.. code-block:: java
-
-  ...
-  List<DetectorRawData> rawData = decoder.getDataEntries(event);
-
-  for(DetectorRawData data : rawData){
-      System.out.println(data);
-  }
-  ...
-
-Working with translation tables
-===============================
-
-There is a standard interface for implementing translation tables to work with raw data and
-convert them into more readable format of SECTOR/LAYER/COMPONENT. The interface has few methods 
-that need to be implemented then the decoder class can handle the translation for the user.
-The implementation is simple:
-
-.. code-block:: java
-
-  public class FTCALTranslationTable extends AbsDetectorTranslationTable {
-
-    public FTCALTranslationTable(){
-      super("FTCAL",900); // This defines name of the detector and tag=900 for final bank
-      // TAG is uded by automated convertor to create event with proper structure
-    }
-
-    @Override
-    public Integer getSector(int crate, int slot, int channel){
-      if(crate==4||crate==5){
-        return (crate - 1);
-      }
-      return -1;
-    }
-
-    @Override
-    public Integer getLayer(int crate, int slot, int channel){
-      if(crate==4||crate==5){
-        return (slot*2);
-      }
-      return -1;
-    }
-
-    @Override
-    public Integer getComponent(int crate, int slot, int channel){
-      if(crate==4||crate==5){
-        return channel;
-      }
-      return -1;
-    }
-  }
+  ----> number of translation tables = 5
+  ---> loading tanslation table [CTOF] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/CTOF.table
+  ---> loading tanslation table [FTOF1A] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/FTOF1A.table
+  ---> loading tanslation table [FTOF1B] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/FTOF1B.table
+  ---> loading tanslation table [PCAL] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/PCAL.table
+  ---> loading tanslation table [SVT] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/SVT.table
+  ---------------> event  # 1
+  ---------------> event  # 2
+  ---------------> event  # 3
+  D [FTOF1A ] C/S/C [  11    4   13 ]  S/L/C [   2    1   16 ]  ORDER =    0 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  11    4   15 ]  S/L/C [   2    1   16 ]  ORDER =    1 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  12    3   29 ]  S/L/C [   2    1   16 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    55195
+  D [FTOF1A ] C/S/C [  12    3   31 ]  S/L/C [   2    1   16 ]  ORDER =    3 -->>>  TYPE =      TDC  VALUE =    55779
+  D [FTOF1A ] C/S/C [  12    3   29 ]  S/L/C [   2    1   16 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    63708
+  ---------------> event  # 4
+  ---------------> event  # 5
+  D [FTOF1A ] C/S/C [  11    5    4 ]  S/L/C [   2    1   21 ]  ORDER =    0 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  11    5    6 ]  S/L/C [   2    1   21 ]  ORDER =    1 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  11    6    1 ]  S/L/C [   2    1   20 ]  ORDER =    0 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  11    6    3 ]  S/L/C [   2    1   20 ]  ORDER =    1 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  12   16    4 ]  S/L/C [   2    1   21 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    57556
+  D [FTOF1A ] C/S/C [  12   16   17 ]  S/L/C [   2    1   20 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    57484
+  D [FTOF1A ] C/S/C [  12   16    6 ]  S/L/C [   2    1   21 ]  ORDER =    3 -->>>  TYPE =      TDC  VALUE =    57028
+  D [FTOF1A ] C/S/C [  12   16   19 ]  S/L/C [   2    1   20 ]  ORDER =    3 -->>>  TYPE =      TDC  VALUE =    56764
+  D [FTOF1A ] C/S/C [  12   16   19 ]  S/L/C [   2    1   20 ]  ORDER =    3 -->>>  TYPE =      TDC  VALUE =    64944
+  ---------------> event  # 6
+  ---------------> event  # 7
+  D [FTOF1A ] C/S/C [  11    5    4 ]  S/L/C [   2    1   21 ]  ORDER =    0 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  11    5    6 ]  S/L/C [   2    1   21 ]  ORDER =    1 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  12   16    4 ]  S/L/C [   2    1   21 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    57660
+  D [FTOF1A ] C/S/C [  12   16    6 ]  S/L/C [   2    1   21 ]  ORDER =    3 -->>>  TYPE =      TDC  VALUE =    56880
+  ---------------> event  # 8
+  D [FTOF1A ] C/S/C [  11    3   13 ]  S/L/C [   2    1   15 ]  ORDER =    0 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  11    3   15 ]  S/L/C [   2    1   15 ]  ORDER =    1 -->>>  TYPE = ADCPULSE   SIZE =      100
+  D [FTOF1A ] C/S/C [  12    3   13 ]  S/L/C [   2    1   15 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    55024
+  D [FTOF1A ] C/S/C [  12    3   15 ]  S/L/C [   2    1   15 ]  ORDER =    3 -->>>  TYPE =      TDC  VALUE =    55759
+  D [FTOF1A ] C/S/C [  12    3   13 ]  S/L/C [   2    1   15 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    73541
+  D [FTOF1A ] C/S/C [  12    3   13 ]  S/L/C [   2    1   15 ]  ORDER =    2 -->>>  TYPE =      TDC  VALUE =    74658
 
 
-This is a ready class now to be used with decoder class to compile a list of the hits from 
-all crated that belong to given detector. 
-
-.. code-block:: java
-
-  import org.jlab.evio.clas12.*;
-  import org.jlab.clas12.raw.*;
-  import org.jlab.io.decode.*;
-  
-  ...
-  EvioRawEventDecoder    decoder = new  EvioRawEventDecoder();
-  FTCALTranslationTable  trTable = new  FTCALTranslationTable();
-  List<RawDataEntry> dataEntries = reader.getDataEntries(evioEvent);
-  if(dataEntries != null){
-    List<RawDataEntry>  ftcalData = decoder.getDecodedData(dataEntries,trTable);
-    // The list will contain only entries that were decoded by translation table
-  }
-  ...
-
-
-The returned list is a subset of the original list of hits for which translation table
-returns getSector(crate,slot,channel) >= 0. Implementation of a new translation table class
-is only neccessary in cases when the mapping is not trivial or if the representation of 
-translation table in the file will be too large. The abstract translation table class has methods 
-to read a translation file and do translation based values from the table. The file format for
-table is given as an example:
+First lines of printout show the translation tables that have been automatically loaded from the environment. The code
+expects the translation tables to be placed in directory "$CLAS12DIR/etc/bankdefs/translation". Every system has to place 
+their translation table in the standard directory to automatically load them. The Translation table format is following:
 
 .. code-block:: bash
 
   #-----------------------------------------------------------------------------
   # TRANSLATION TABLE
   #-----------------------------------------------------------------------------
-  # Detector - Sector - Layer - Component - CRATE - SLOT - CHANNEL
+  # Detector - CRATE - SLOT - CHANNEL - SECTOR - LAYER - COMPONENT - ORDER
+  # ORDER 0=ADCL, 1=ADCR, 2=TDCL, 3=TDCR
   #-----------------------------------------------------------------------------
-  FTCAL      1      1      0      4      3     0
-  FTCAL      2      1      0      4      3     1
-  FTCAL      3      1      0      4      4     2
-  FTCAL      4      1      0      4      4     3
-  FTCAL      5      1      0      4      5     4
-  ...
-  ...
+  FTOF1A        5        3        0        1        1        1        0
+  FTOF1A        5        3        1        1        1        3        0
+  FTOF1A        5        3        2        1        1        1        1
+  FTOF1A        5        3        3        1        1        3        1
+  FTOF1A        5        3        4        1        1        5        0
+  FTOF1A        5        3        5        1        1        7        0
+  FTOF1A        5        3        6        1        1        5        1
 
-To read this table (say names FTCAL.table) use the standard abstract translation table class:
 
-.. code-block:: java
+For detectors with only one ADC and one TDC only entries with ORDER=1 and 3 are appropriate.
 
-  ...
-  AbsDetectorTranslationTable  trTable = new  AbsDetectorTranslationTable("FTCAL",900);
-  trTable.readFile("FTCAL.table");
-  System.out.println(trTable); // printout the content of the table
-  ...
+Drawing Pulses
+==============
 
-Writing an output file
-======================
-
-Here is a complete code showing how to implement a decoder program for one given detector.
+The printout of the event shows what kind of data is contained in each DetectorBankEntry. If the entry is a 
+raw pulse a histogram can be constructed from the pulse:
 
 .. code-block:: java
 
-   import org.jlab.evio.clas12.*;
-   import org.jlab.clas12.raw.*;
-   import org.jlab.io.decode.*;
-
-   String inputFile  = args[0];
-   String outputFile = "mydecoded_data.evio";
-
-   AbsDetectorTranslationTable  trTable = new  AbsDetectorTranslationTable("FTCAL",900);
-
-   trTable.readFile("FTCAL.table");
-   
-   EvioRawEventDecoder    decoder = new  EvioRawEventDecoder();
-   EvioRawDataSource       reader = new EvioRawDataSource();
-   reader.open(inputFile);
-
-   EvioDataSync  writer = new EvioDataSync();
-   writer.open(outputFile);
-
-   while(reader.hasEvent()){
-      EvioDataEvent event = reader.getNextEvent();
-      List<RawDataEntry> dataEntries = reader.getDataEntries(evioEvent);
-      if(dataEntries != null){
-        List<RawDataEntry>  ftcalData = decoder.getDecodedData(dataEntries,trTable);
-        int nrows = ftcalData.size();
-        if(nrows>0){
-          EvioDataEvent  outEvent = writer.createEvent(EvioFactory.getDictionary());
-          EvioDataBank   bank     = outEvent.getDictionary().createBank("FTCAL::dgtz",nrows);
-          for(int loop = 0; loop < nrows; loop++){
-             int idx = ftcalData.get(loop).getComponent() % 22;
-             int idy = ftcalData.get(loop).getComponent() / 22;
-             int TDC = ftcalData.get(loop).getTDC();
-             int ADC = ftcalData.get(loop).getADC();
-             bank.setInt("idx",loop,idx);
-             bank.setInt("idy",loop,idy);
-             bank.setInt("ADC",loop,ADC);
-             bank.setInt("TDC",loop,TDC);
-          }
-          outEvent.appendBanks(bank);
-          writer.writeEvent(outEvent);
-        }
+  if(cnt.getType()==BankType.ADCPULSE){
+      H1D hp = EventDecoder.getADCPulse(cnt);
+      for(int bin = 0; bin < hp.getxAxis().getNBins();bin++){
+          System.out.println(bin + " " + hp.getBinContent(bin));
       }
-    reader.list(event);
-   }
+  }
 
-   reader.close();
-   writer.close();
+  if(cnt.getType()==BankType.TDC){
+    int[] tdc = (int[]) cnt.getDataObject();
+    System.out.println(" TDC VALUE = " + tdc[0]);                     
+  }
+                 
+  if(cnt.getType()==BankType.ADC){
+    int[] adc = (int[]) cnt.getDataObject();
+    System.out.println(" ADC VALUE = " + adc[0]);
+  }
+               
+  if(cnt.getType()==BankType.ADCFPGA){
+    int[] adc = (int[]) cnt.getDataObject();
+    System.out.println(" PEDISTAL = " + adc[0] 
+        + "  PULSE = " + adc[1] 
+        + "  MAX   = " + adc[2] 
+        + "  TIME  = " + adc[3]); 
+  }
 
-This program will read raw hits from all crates, then decoded array will contain only hits from
-FTCAL which have entries in the translation table, then these hits will be written into the event.
+
