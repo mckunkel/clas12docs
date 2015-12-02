@@ -129,8 +129,8 @@ their translation table in the standard directory to automatically load them. Th
 
 For detectors with only one ADC and one TDC only entries with ORDER=1 and 3 are appropriate.
 
-Drawing Pulses
-==============
+Getting decoded data
+====================
 
 The printout of the event shows what kind of data is contained in each DetectorBankEntry. If the entry is a 
 raw pulse a histogram can be constructed from the pulse:
@@ -161,5 +161,129 @@ raw pulse a histogram can be constructed from the pulse:
         + "  MAX   = " + adc[2] 
         + "  TIME  = " + adc[3]); 
   }
+
+
+
+Analysing MODE 7 data
+=====================
+
+In mode 7 the ADC pulses are fit with FPGA and four numbers are recorded, pulse integral pulse pedistal,
+pulse time and maximum height. The decoder automatically writes pedestal subtracted ADC value into DetectorCounter 
+class. Here is a sample code, showing how to analyze data from mode 7.
+
+
+.. code-block:: java
+
+        String input = "/Users/gavalian/Work/Software/Release-8.0/COATJAVA/FC/sector2_000233_mode7.evio.0";
+        EvioSource  reader = new EvioSource();
+        reader.open(input);
+        EventDecoder decoder = new EventDecoder();
+        
+        decoder.addFitter(DetectorType.FTOF1A, new FADCBasicFitter(30,35,70,75));
+        int icounter = 0;
+        H1D hADC = new H1D("hADC",100,0.0,14000.0);
+        H1D hTDC = new H1D("hTDC",100,-2000.0,2000.0);
+        H2D hADCPADDLE = new H2D("hADCPADDLE",23,0.5,23.5,40,0.0,14000.0);
+        H2D hTDCPADDLE = new H2D("hTDCPADDLE",23,0.5,23.5,40,-2000.0,2000.0);
+        
+        hADC.setLineWidth(2);
+        hADC.setFillColor(3);
+        hTDC.setLineWidth(2);
+        hTDC.setFillColor(6);
+        
+        hADC.setXTitle("ADCL+ADCR");
+        hTDC.setXTitle("TDCL-TDCR");
+        hADCPADDLE.setXTitle("FTOF1A PADDLE #");
+        hTDCPADDLE.setXTitle("FTOF1A PADDLE #");
+        hADCPADDLE.setYTitle("ADCL+ADCR");
+        hTDCPADDLE.setYTitle("TDCL-TDCR");
+        
+        
+        while(reader.hasEvent()){
+            icounter++;
+             EvioDataEvent event = (EvioDataEvent) reader.getNextEvent();
+             decoder.decode(event);
+             List<DetectorCounter> banks = decoder.getDetectorCounters(DetectorType.FTOF1A);
+
+             for(DetectorCounter bank : banks){
+                 if(bank.getChannels().size()==2){
+                     if(bank.isMultiHit()==false){
+                         // isMultihit() method returns false when
+                         //  (bank.getChannels().get(0).getADC().size()==1&&
+                         //  bank.getChannels().get(1).getADC().size()==1&&
+                         //  bank.getChannels().get(0).getTDC().size()==1&&
+                         //  bank.getChannels().get(1).getTDC().size()==1)
+                         // it checks if each channel has one ADC and one TDC.
+                         int adcL = bank.getChannels().get(0).getADC().get(0);
+                         int adcR = bank.getChannels().get(1).getADC().get(0);
+                         int tdcL = bank.getChannels().get(0).getTDC().get(0);
+                         int tdcR = bank.getChannels().get(1).getTDC().get(0);
+                         hADC.fill(adcL+adcR);
+                         hTDC.fill(tdcL-tdcR);
+                         int paddle = bank.getDescriptor().getComponent();
+                         hADCPADDLE.fill(paddle, adcL+adcR);
+                         hTDCPADDLE.fill(paddle, tdcL-tdcR);
+                     }
+                 }
+             }
+        }
+        TGCanvas c1 = new TGCanvas("c1","FTOF1A",1200,800,2,2);
+        c1.cd(0);
+        c1.draw(hADC);
+        c1.cd(1);
+        c1.draw(hTDC);
+        c1.cd(2);
+        c1.draw(hADCPADDLE);
+        c1.cd(3);
+        c1.draw(hTDCPADDLE);
+
+
+Resulting histograms:
+
+.. image:: images/rawDataAnalysis.png
+
+Note, for detectors with only one PMT, there will be one channel present in the DetectorCounter class, 
+with corresponding ADC and TDC arrays (it multihit).
+
+Analyzing MODE 1 data
+=====================
+
+
+In mode one the entire pulse form is recorded the decoder uses IFADCFitter class to determine ADC value and
+record it in the DetectorCounter class. When initializing EvioDecoder class a basic fitter class can be passed to 
+the decoder with parameters defining pedestal and pulse integration regions.
+
+.. code-block:: java
+
+        String input = "/Users/gavalian/Work/Software/Release-8.0/COATJAVA/FC/sector2_000233_mode1.evio.0";
+        EvioSource  reader = new EvioSource();
+        reader.open(input);
+        EventDecoder decoder = new EventDecoder();
+        
+        decoder.addFitter(DetectorType.FTOF1A, 
+                new FADCBasicFitter(  30, // first bin for pedestal
+                                      35, // last bin for pedestal
+                                      70, // first bin for pulse integral
+                                      75  // last bin for pulse integral
+                                      ));
+        while(reader.hasEvent()){
+            icounter++;
+             EvioDataEvent event = (EvioDataEvent) reader.getNextEvent();
+             decoder.decode(event);
+             List<DetectorCounter> banks = decoder.getDetectorCounters(DetectorType.FTOF1A);
+
+             for(DetectorCounter bank : banks){
+                System.out.println(bank);
+             }
+        }
+
+Note, the decoder automatically adjusts to the input, and nothing special has to be done when 
+reading MODE 1 or MODE 7 data, when MODE 1 data is present the decoder will automatically look
+to find a fitter corresponding to given detector, if not found it will printout a warning message
+and the resulting DetectorCounter will have no ADC value in any of the channels. When using the decoder
+it's a good idea to always add fitter for given detector, if the data is in MODE 7, the fitter will not 
+be used.
+
+
 
 
