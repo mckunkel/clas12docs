@@ -83,6 +83,10 @@ in the chain.
 The configuration flags can be passed trhough command line, and they are described 
 in the printout. 
 
+NOTE: One of the most important flags is "-config DATA::mc=true", indicates that 
+the recnostruction is running on GEMC data, due to some inconsistencies in the
+detector geometry, this flag is necessary.
+
 Reconstruction program can be used offline (with no internet correction), one has 
 to specify the relative path to the sqlite database table to be used instead of mysql
 server. The local database is included in the coatjava package, and the relative

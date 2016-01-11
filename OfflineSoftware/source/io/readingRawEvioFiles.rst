@@ -32,7 +32,7 @@ To read raw files one must use:
     import org.jlab.clas12.raw.*;
     import org.jlab.evio.decode.*;
     import org.jlab.clas.detector.*;
-    import org.jlab.clas12.detector;
+    import org.jlab.clas12.detector.*;
 
     outputFile = args[0];
 
@@ -51,6 +51,8 @@ To read raw files one must use:
        // The name FTOF1A comes from TRANSLATION TABLE (look below)
        // For other detectors use decoder.getDataEntries("PCAL") for example
        List<DetectorBankEntry> counters =  decoder.getDataEntries("FTOF1A");
+       // The entire list of decoded data can be obtained by:
+       // List<DetectorBankEntry> counters =  decoder.getDataEntries();
        decoder.getDetectorCounters(DetectorType.FTOF1A);
 
        for(DetectorBankEntry cnt : counters){
@@ -156,6 +158,9 @@ raw pulse a histogram can be constructed from the pulse:
                
   if(cnt.getType()==BankType.ADCFPGA){
     int[] adc = (int[]) cnt.getDataObject();
+    int crate = cnt.getDescriptor().getCrate();
+    int slot  = cnt.getDescriptor().getSlot();
+    int chan  = cnt.getDescriptor().getChannel();
     System.out.println(" PEDISTAL = " + adc[0] 
         + "  PULSE = " + adc[1] 
         + "  MAX   = " + adc[2] 
@@ -220,6 +225,8 @@ class. Here is a sample code, showing how to analyze data from mode 7.
                          int tdcR = bank.getChannels().get(1).getTDC().get(0);
                          hADC.fill(adcL+adcR);
                          hTDC.fill(tdcL-tdcR);
+                         int sector = bank.getDescriptor().getSector();
+                         int layer  = bank.getDescriptor().getLayer();
                          int paddle = bank.getDescriptor().getComponent();
                          hADCPADDLE.fill(paddle, adcL+adcR);
                          hTDCPADDLE.fill(paddle, tdcL-tdcR);

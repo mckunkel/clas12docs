@@ -42,6 +42,46 @@ sourced:
 
    >source /group/clas12/environment_java_8.csh
 
+Running on Local Machines
+=========================
+
+To run CLAS12 software on local machine, user is required to have JDK version >= 1.8 and groovy installed. To check your 
+JDK version run:
+
+.. code-block:: bash
+
+   >java -version
+
+  java version "1.8.0_51"
+  Java(TM) SE Runtime Environment (build 1.8.0_51-b16)
+  Java HotSpot(TM) 64-Bit Server VM (build 25.51-b03, mixed mode)
+
+The groovy installation on Mac is very simple, one needs to run:
+
+.. code-block:: bash
+
+  > sudo port install groovy
+
+for port users, or:
+
+.. code-block:: bash
+
+  > brew install groovy
+
+for brew users, for all other systems, check out the instruction on Groovy web site (http://www.groovy-lang.org/download.html):
+
+.. _a link: http://www.groovy-lang.org/download.html
+
+The example script from the web site or from the package must be ran with command line:
+
+.. code-block:: bash
+
+  >$COATJAVA/bin/run-groovy example.groovy
+
+The script sets up the directories and clas paths properly so the scripts can find the packages
+of CLAS12 software and all the configuration files that the package needs.
+
+
 
 Downloading coatjava
 ====================
