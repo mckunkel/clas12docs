@@ -22,10 +22,11 @@ Standard Java Library For CLAS12:
 CLAS12 Simulation/Reconstruction
 ---------------------------------
 
+* `Running gemc at JLab <https://gemc.jlab.org/gemc/html/documentation/runningJLab.html>`_
+
 .. toctree::
    :maxdepth: 1
 
-   gemc/runningGemc   
    reconstruction/introduction
    analysis/introduction
    reconstruction/fastMonteCarlo
