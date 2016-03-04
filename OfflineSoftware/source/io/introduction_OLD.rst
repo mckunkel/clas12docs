@@ -7,7 +7,7 @@ JAVA (jython) Input/Output Library
 
 CLAS/IO library is a java package developed to handle input/output of the 
 common data types used in CLAS. The interface is implemented to make codes
-trasparent to the different types of data used. Implementations exist for
+transparent to the different types of data used. Implementations exist for
 formats BOS/FPACK, EVIO (clas12), and iG5 (data mining format). The document 
 describes usage of the package with Jython.
 
@@ -149,7 +149,7 @@ method of the bank will printout the content of the bank with column names. Outp
            TDC :             0              0              0              0              0  
            ADC :             0              0              0              0              0 
 
-Newly initialized bank has all entries equal to zero. To modify the entries set<type>() functionas are used.
+Newly initialized bank has all entries equal to zero. To modify the entries set<type>() functions are used.
 setFloat(name, row, value) or setInt(name, row, value). Here is an example:
 
 .. code-block::	    python
@@ -182,9 +182,9 @@ Reading Events From a file
 --------------------------
 
 For now the evio files do not contain the dictionary object, in the future the dictionary XML
-file will be enbedded in the file so user does not have to worry about having the XML descriptors 
+file will be embedded in the file so user does not have to worry about having the XML descriptors
 locally to be able to access the banks. For now, the EvioSource object has to know where the 
-XML files with bank descriptions are located. The dafault directory is $CLAS12DIR/lib/bankdefs/clas12.
+XML files with bank descriptions are located. The default directory is $CLAS12DIR/lib/bankdefs/clas12.
 Reading events from the file is done using EvioSource object, as in given example:
 
 .. code-block:: python
@@ -199,7 +199,7 @@ Reading events from the file is done using EvioSource object, as in given exampl
 
    print 'Events analyzed from File = ', icounter
 
-This code initilizes a reader object and loops through events while reader.hasEvent() returns "ture".
+This code initializes a reader object and loops through events while reader.hasEvent() returns "true".
 To view the content of the event  event.show() function can be used which displays the banks and sections
 present in the current event. here is an example output:
 
@@ -266,7 +266,7 @@ Reconstruction components for CLAS12 detector that are implemented in Java are e
 that implements an interface where an EvioDataEvent is passed to processEvent(event) method and all input/output
 is handled in the event object. The classes API is the same as for jython scripts. The processEvent(..) method
 reads the banks from the event and after reconstruction writes (appends) newly created banks to the EvioDataEvent
-object. By design, reconstruction banks for each detector are groupped together in a evio container bank. Sections
+object. By design, reconstruction banks for each detector are grouped together in a evio container bank. Sections
 below give an overview on how to read banks, construct new ones and append to the event.
 
 Reading event banks
@@ -316,7 +316,7 @@ descriptor dictionary. For creating output banks use:
 	 event.appendBanks(bankhits,bankclust);
    }
 
-This code will create a bank section "HTCCRec::hits" with 6 rows. To change the values of the columnt in the banks
+This code will create a bank section "HTCCRec::hits" with 6 rows. To change the values of the column in the banks
 use functions set<type>(column_name,row,value), interface is the same as in jython case. So setInt("nphe",0,25) will 
 set the number of photo-electrons for row 0 to 25.
 

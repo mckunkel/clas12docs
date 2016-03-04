@@ -6,7 +6,7 @@ Directories and Trees
 Working with Directories
 ========================
 
-The histogramming package also provides object persistence. Data
+The histogram package also provides object persistence. Data
 objects can be created in groups within a directory which can save
 data objects to evio file and read them. Consider example:
 
@@ -150,7 +150,7 @@ shows plotting x vs y variable.
 
 
 In this plot a condition "x<12&y>6" was applied, shown in the cut input string.
-NOTE, singel "&" or "|" are used for AND and OR operations.
+NOTE, single "&" or "|" are used for AND and OR operations.
 The 1D histograms are plotted if X and Y are chosen to be the same variable.
 
 .. image:: images/ntuple-draw-cut.png

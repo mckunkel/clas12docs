@@ -4,12 +4,12 @@ Running CLAS-12 Reconstruction
 
 This section describes reconstruction tools for CLAS12 detector.
 The reconstruction package is distributed as a tar.gz package and
-contains all neccessary files to run reconstruction.
+contains all necessary files to run reconstruction.
 
 Event Simulation 
 ================
 
-For sumulating CLAS12 detector the GEMC package is used. The input
+For simulating CLAS12 detector the GEMC package is used. The input
 to GEMC is an event file in LUND format. The full documentation
 on how to run GEMC can be found at: https://gemc.jlab.org
 
@@ -18,8 +18,8 @@ Running Reconstruction
 
 The software for reconstruction can be downloaded from https://userweb.jlab.org/~gavalian/software/coatjava/
 
-After unpacking the coatjava CLAS12 reconsturction package one can 
-find all exacuatebles for reconstruction in bin/ directory. The reconstruction
+After unpacking the coatjava CLAS12 reconstruction package one can
+find all executables for reconstruction in bin/ directory. The reconstruction
 program is called clas12-reconstruction and it accepts following arguments.
 
 .. code-block:: bash
@@ -80,11 +80,11 @@ individually or chained together. The order is important to get particles
 reconstructed in the output. The event builder service must be the last one
 in the chain. 
 
-The configuration flags can be passed trhough command line, and they are described 
+The configuration flags can be passed through command line, and they are described
 in the printout. 
 
 NOTE: One of the most important flags is "-config DATA::mc=true", indicates that 
-the recnostruction is running on GEMC data, due to some inconsistencies in the
+the reconstruction is running on GEMC data, due to some inconsistencies in the
 detector geometry, this flag is necessary.
 
 Reconstruction program can be used offline (with no internet correction), one has 
@@ -92,7 +92,7 @@ to specify the relative path to the sqlite database table to be used instead of 
 server. The local database is included in the coatjava package, and the relative
 location and the environment variable to set are described in the help printout.
 
-The printout also privides list of available plugins, the directory lib/plugins
+The printout also provides list of available plugins, the directory lib/plugins
 is scanned for classes that extend DetectorReconstruction and all are available to 
 run through reconstruction program. User developed jar files must be copied to 
 the plugins directory in order to appear in the available module list.
@@ -136,7 +136,7 @@ Kinematics Monitoring
 =====================
 
 To view kinematics of reconstructed event one could use the standard tool
-for kinematics monitoring. It displays plots for vaious final states inclusing
+for kinematics monitoring. It displays plots for various final states including
 double pion production and DVCS (more channels will be added). To run kinematics
 monitoring tool use:
 

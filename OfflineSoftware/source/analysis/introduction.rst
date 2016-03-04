@@ -3,7 +3,7 @@ Analyzing Reconstructed Data
 ****************************
 
 This section describes analysis tools available within clara framework
-to analize reconstructed data events.
+to analyze reconstructed data events.
 
 Groovy Scripts
 ==============
@@ -15,7 +15,7 @@ scripts the groovy package has to be installed on the computer. On OSX machines
 this can be done by:
 
 .. code-block:: bash
-   
+  
    > sudo port install groovy
 
 On Jlab farm machines one has to initialize groovy by:
@@ -52,7 +52,7 @@ script will run through events in the file:
 	  event.show(); // print out all banks in the event
        }
 
-The banks are reffered to with their name and the section separated by '::',
+The banks are referred to with their name and the section separated by '::',
 for example to read digitized bank from DC the following code can be used:
 
 .. code-block:: java
@@ -69,7 +69,7 @@ The EvioDataSource object is derived from DataSource interface, and there are se
 of DataSource, one of them is the BOS (legacy CLAS6 format) reader. In the same manner the BOS files
 can be read within our Java framework with no additional effort. To read bos files the bos reader 
 interface can be used. There are slight differences in the bank description in BOS format, since the
-BOS banks are numbered, the descriptor to reatrieve particular bank should contain the number of the 
+BOS banks are numbered, the descriptor to retrieve particular bank should contain the number of the
 bank within the name, if no number is present '0' will be assumed.
 
 
@@ -80,7 +80,7 @@ The EVIO structures produced by reconstruction program can be parsed to produce
 events for physics analysis. There is a standard interface allowing to implement
 different ways to identify particles. One simple implementation exists called
 GenericKinematicFitter which reads generated particle bank and the reconstructed
-particle bank with the PID assigned by standrard Event Builder. Example:
+particle bank with the PID assigned by standard Event Builder. Example:
 
 
 .. code-block:: java
@@ -108,7 +108,7 @@ Working with Physics Events
 ===========================
 
 Physics event object is a container for particles and has a beam particle and 
-a target particle, there are few convenience methods that alow checking the 
+a target particle, there are few convenience methods that allow checking the
 final state of the event. Particle id's are used to require specific particle
 to be in the final state, and "X" followed by the sign is used to require any 
 number of particles with particular charge. For example "X+" means any number 
@@ -185,7 +185,7 @@ Selecting particles
 ===================
 
 PhysicsEvent object can be used to construct composite particles from the final sate 
-(as in the examples above), but it can alse be used to loop through particles with
+(as in the examples above), but it can also be used to loop through particles with
 either given charge or given pid. Example:
 
 .. code-block:: java

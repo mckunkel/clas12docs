@@ -2,9 +2,9 @@
 Monitoring and Calibration Software
 ***********************************
 
-Calibration and Monitoring software for CLAS12 can be implemented as plugins. The pluings
+Calibration and Monitoring software for CLAS12 can be implemented as plugins. The plugins
 can be loaded by automated GUI which includes a detector view and and has a callback to user plotting 
-routine for diplaying plots for various parts of the detector.
+routine for displaying plots for various parts of the detector.
 
 Monitoring Class
 ================
@@ -133,7 +133,7 @@ Running Monitoring GUI
 
 The gui program is included in coatjava distribution. Run the code "bin/clas12ui", then choose "Plugins/Load"
 from menu, the plugin list will appear, choose FTOF plugin. Then choose "File/Process File" and choose an EVIO
-file to run. The plugin will automatically run all events throu plugin and the drawComponent() method will be
+file to run. The plugin will automatically run all events through plugin and the drawComponent() method will be
 called each time mouse passes over a detector component.
 Here is a screenshot of the GUI:
 

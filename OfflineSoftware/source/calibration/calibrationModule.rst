@@ -10,7 +10,7 @@ Example code showing how to develop calibration plugin.
     // This is an example program showing how to extend 
     // Calibration class and use it for Detector display and 
     // analysis.
-    // This barebone should be used to fill the code with classes developed
+    // This bare-bone should be used to fill the code with classes developed
     // for specific detector. Please do not write entire code in one class.
     // 
     //********************************************************************
@@ -43,13 +43,13 @@ Example code showing how to develop calibration plugin.
              // to drawing routine. It is used to have ability
              // to draw different sets of histograms for each paddle
              // This is Groovy syntax, in Java use :
-             // return new String[]{"Ocupancy","TDC"};
-             return ["Ocupancy","TDC"];
+             // return new String[]{"Occupancy","TDC"};
+             return ["Occupancy","TDC"];
            }
 
            public void init(){
               // Initialize histograms here. This routine will be
-              // called for each file that wil then processed through
+              // called for each file that will then processed through
               // processEvent Method.
               for(int sector = 0 ; sector < 6; sector++){
                  for(int layer = 0; layer<6; layer++){
@@ -93,7 +93,7 @@ Example code showing how to develop calibration plugin.
                   double innnerRadius = (layer + 1)*50 + 80;
                   DetectorShape2D shape = new DetectorShape2D(DetectorType.HTCC,sector,layer,1);
                   // this part of code creates a shape as an arc with parameters
-                  // 1) inner radius, 2) outter radius, 3) start angle (deg) , 4) end angle (deg)
+                  // 1) inner radius, 2) outer radius, 3) start angle (deg) , 4) end angle (deg)
                   shape.createArc(innnerRadius,innnerRadius + 40.0,midangle-25,midangle+25);
                   // Also Shapes can be created as bars using the following segment of the code.
                   // The bar is created in XY plane with the origin being the middle of the bar.
@@ -147,7 +147,7 @@ Example code showing how to develop calibration plugin.
             }
             // Draw occupancy for given sector and layer.
             // Drawing two panels just for demonstration.
-            if(option.compareTo("Ocupancy")==0){
+            if(option.compareTo("Occupancy")==0){
               if(hOCC.containsKey(key)==true){
                 canvas.divide(1,2);
                 canvas.cd(0);

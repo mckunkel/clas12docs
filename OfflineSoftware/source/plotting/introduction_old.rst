@@ -2,7 +2,7 @@
 JAVA (COAT) Plotting Package
 ****************************
 
-Documentation of plaotting package provided within CLAS12 COAT package.
+Documentation of plotting package provided within CLAS12 COAT package.
 
 Groovy Scripts
 ==============
@@ -18,7 +18,7 @@ In recent years ROOT has become the most popular scientific plotting package.
 Most people know and use ROOT for their data plotting needs. We implemented
 the Java plotting library to mimic the root functionality, and have Object 
 names and methods same as for ROOT environment. This will make an easy transition
-for the users acustomed to ROOT to Java plotting package.
+for the users accustomed to ROOT to Java plotting package.
 
 Getting started
 ===============
@@ -81,7 +81,7 @@ The resulting plot looks like:
 Working with Directories
 ========================
 
-The histogramming package also provides object persistence. Data
+The histogram package also provides object persistence. Data
 objects can be created in groups within a directory which can save
 data objects to evio file and read them. Consider example:
 
@@ -225,7 +225,7 @@ shows plotting x vs y variable.
 
 
 In this plot a condition "x<12&y>6" was applied, shown in the cut input string.
-NOTE, singel "&" or "|" are used for AND and OR operations.
+NOTE, single "&" or "|" are used for AND and OR operations.
 The 1D histograms are plotted if X and Y are chosen to be the same variable.
 
 .. image:: images/ntuple-draw-cut.png

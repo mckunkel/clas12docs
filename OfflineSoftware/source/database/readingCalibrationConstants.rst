@@ -4,13 +4,13 @@
 CLAS Calibration Database
 *************************
 
-CLAS geomtery uses the CCDB database for storing calibration constants.
+CLAS geometry uses the CCDB database for storing calibration constants.
 
 Reading Database Table
 ======================
 
 DatabaseContantProvider class is used for reading database tables and accessing
-the data. The table contains multiple columnd, each column is read as one variable
+the data. The table contains multiple columns, each column is read as one variable
 and stored as an array of strings. Example session:
 
 .. code-block::      java
@@ -23,10 +23,10 @@ and stored as an array of strings. Example session:
 	// initialize database connection provider for RUN #=10 and variation = default
 	DatabaseConstantProvider  dbprovider = new DatabaseConstantProvider(10,"default");
 
-	// load table reads antire table and makes an array of variables for each column in the table.
+	// load table reads entire table and makes an array of variables for each column in the table.
 	dbprovider.loadTable("/calibration/ftof/attenuation");
 
-	// disconncect from databas. Important to do this after loading tables.
+	// disconnect from database. Important to do this after loading tables.
 	dbprovider.disconnect();
 
 	// printout names of columns and lengths for each variable

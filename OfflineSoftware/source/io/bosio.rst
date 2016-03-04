@@ -17,10 +17,10 @@ Preparing to convert
 ====================
 
 The BOS files created by RECSIS (CLAS-6 event reconstruction program) sometimes
-have splitted event buffers and discontinuities of BANKs within an event record.
+have split event buffers and discontinuities of BANKs within an event record.
 Java software can deal with some of the fragmentation in the FPACK format, but
-not all of them sometimes resulting in mising banks. In order to avoid this issue
-it is recomended to pass BOS file through filter which creates clean continues
+not all of them sometimes resulting in missing banks. In order to avoid this issue
+it is recommended to pass BOS file through filter which creates clean continues
 records out of BOS file. The command to filter BOS is:
 
 .. code-block:: bash

@@ -6,7 +6,7 @@ Reading/Writing Dictionary based files
 
 CLAS/IO library is a java package developed to handle input/output of the 
 common data types used in CLAS. The interface is implemented to make codes
-trasparent to the different types of data used. Implementations exist for
+transparent to the different types of data used. Implementations exist for
 formats BOS/FPACK, EVIO (clas12), and iG5 (data mining format). The document 
 describes usage of the package with Jython.
 
@@ -137,7 +137,7 @@ method of the bank will printout the content of the bank with column names. Outp
         energy :       0.00000        0.00000  
              Z :       0.00000        0.00000 
 
-Newly initialized bank has all entries equal to zero. To modify the entries set<type>() functionas are used.
+Newly initialized bank has all entries equal to zero. To modify the entries set<type>() functions are used.
 setFloat(name, row, value) or setInt(name, row, value). Here is an example:
 
 .. code-block::	java
@@ -206,9 +206,9 @@ Reading Events From a file
 --------------------------
 
 For now the evio files do not contain the dictionary object, in the future the dictionary XML
-file will be enbedded in the file so user does not have to worry about having the XML descriptors 
+file will be embedded in the file so user does not have to worry about having the XML descriptors
 locally to be able to access the banks. For now, the EvioSource object has to know where the 
-XML files with bank descriptions are located. The dafault directory is $CLAS12DIR/lib/bankdefs/clas12.
+XML files with bank descriptions are located. The default directory is $CLAS12DIR/lib/bankdefs/clas12.
 If there is a custom bank dictionary is used to write the file, it must be initialized 
 before reading the file. In this example we need first to load the CUSTOM.xml file by loading the 
 dictionary from current directory.

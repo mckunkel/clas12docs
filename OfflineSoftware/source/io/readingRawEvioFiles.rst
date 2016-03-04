@@ -23,7 +23,7 @@ Reading Raw (DAQ) Files
 =======================
 
 Following are examples of groovy scripts used to read evio RAW data files. The examples 
-can be found in coatjava package in directory sctipts/evio.
+can be found in coatjava package in directory scripts/evio.
 To read raw files one must use:
 
 .. code-block:: java
@@ -69,11 +69,11 @@ The printout looks like:
 .. code-block:: bash
 
   ----> number of translation tables = 5
-  ---> loading tanslation table [CTOF] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/CTOF.table
-  ---> loading tanslation table [FTOF1A] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/FTOF1A.table
-  ---> loading tanslation table [FTOF1B] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/FTOF1B.table
-  ---> loading tanslation table [PCAL] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/PCAL.table
-  ---> loading tanslation table [SVT] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/SVT.table
+  ---> loading translation table [CTOF] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/CTOF.table
+  ---> loading translation table [FTOF1A] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/FTOF1A.table
+  ---> loading translation table [FTOF1B] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/FTOF1B.table
+  ---> loading translation table [PCAL] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/PCAL.table
+  ---> loading translation table [SVT] : /Users/gavalian/Work/Software/Release-8.0/COATJAVA/coatjava/etc/bankdefs/translation/SVT.table
   ---------------> event  # 1
   ---------------> event  # 2
   ---------------> event  # 3
@@ -169,10 +169,10 @@ raw pulse a histogram can be constructed from the pulse:
 
 
 
-Analysing MODE 7 data
+Analyzing MODE 7 data
 =====================
 
-In mode 7 the ADC pulses are fit with FPGA and four numbers are recorded, pulse integral pulse pedistal,
+In mode 7 the ADC pulses are fit with FPGA and four numbers are recorded, pulse integral pulse pedestal,
 pulse time and maximum height. The decoder automatically writes pedestal subtracted ADC value into DetectorCounter 
 class. Here is a sample code, showing how to analyze data from mode 7.
 
@@ -250,7 +250,7 @@ Resulting histograms:
 .. image:: images/rawDataAnalysis.png
 
 Note, for detectors with only one PMT, there will be one channel present in the DetectorCounter class, 
-with corresponding ADC and TDC arrays (it multihit).
+with corresponding ADC and TDC arrays (it multi-hit).
 
 Analyzing MODE 1 data
 =====================

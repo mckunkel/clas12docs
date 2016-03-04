@@ -25,8 +25,8 @@ compiled. The repository is located on github, to get it use command:
    mymachine> setenv CLASROOT `pwd`
    mymachine> scons
 
-The setup of enviroment variabe CLASROOT is necessary for the package to locate
-the dictionaries for bank neccessary to construct ROOT tree for evio data files.
+The setup of environment variable CLASROOT is necessary for the package to locate
+the dictionaries for bank necessary to construct ROOT tree for evio data files.
 The examples folder contains sample codes that run in ROOT(CINT).
 
 Example Session
@@ -100,5 +100,5 @@ the tree object:
     H1->Draw();
   }
 
-For differnet types of variables different get functions have to be used. GetValueI - for 
+For different types of variables different get functions have to be used. GetValueI - for
 integer, GetValueF - for floats and GetValueD - for doubles. 

@@ -7,14 +7,14 @@ This section describes how start development for CLAS12 detector components code
 Getting Started
 ===============
 
-Developing in Java done in IDE of users chice. Eclipse or NetBeans can be used.
+Developing in Java done in IDE of users choice. Eclipse or NetBeans can be used.
 CLAS12 framework main code uses Maven to distribute and version the software. 
 All tools available are packaged in one JAR file for convenience. Separate
 libraries can also be found on the Maven repository. Maven repository is set 
 up at Jlab : http://clasweb.jlab.org/clas12maven. And the uber JAR (all packed in
 one jar) can be found at: http://clasweb.jlab.org/clas12maven/org/jlab/coat/coat-libs.
 
-Two aproaches are available for starting a project, with ant or maven.
+Two approaches are available for starting a project, with ant or maven.
 
 Developing with ant
 -------------------
@@ -71,7 +71,7 @@ To use coat-libs package in your project you need to modify your pom.xml file as
     </project>   
 
 
-The top section describes users project name and version. The dependecy section adds
+The top section describes users project name and version. The dependency section adds
 coat-libs as a dependency to the project, and repositories section provides a link
 to CLAS12 maven repository. With this modified POM file the full functionality of
 coat libraries is now available.
@@ -83,7 +83,7 @@ Calibration Code
 There are few standard classes developed for user convenience that can be used to
 take full advantage of the framework tools. The class DetectorMonitoring can be used
 to develop monitoring and calibration software. It provides functionality for loading
-calibration constatns and geometries. The user has to implement four abstract methods.
+calibration constants and geometries. The user has to implement four abstract methods.
 
 .. code-block:: java
 

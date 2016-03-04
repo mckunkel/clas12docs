@@ -107,7 +107,7 @@ Intersections of Shapes with Lines
 ----------------------------------
 
 The Shape3D object can detect intersections of any of it's faces with line 3D object, there are three modes of intersection.
-The line can be threated as an infinite line, as a ray or a segment. Here is an example code showing how to check for intersection.
+The line can be treated as an infinite line, as a ray or a segment. Here is an example code showing how to check for intersection.
 
 .. code-block::	java
 

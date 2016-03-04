@@ -68,7 +68,7 @@ Running with Particle Generators
 ================================
 
 The fast MC class can also analyze individual particles for acceptance. In the example below we generate
-random electron with given energy and agular constrains. Then we pass it to fast MC class, if returned
+random electron with given energy and angular constrains. Then we pass it to fast MC class, if returned
 particle had momentum =0, then particle was not reconstructed by detector:
 
 .. code-block:: java

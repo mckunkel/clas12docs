@@ -20,7 +20,7 @@ Points and Lines
 
    System.out.println(p1);
    System.out.println(p2);
-   System.out.println(" ditance =  " + p1.distance(p2));
+   System.out.println(" distance =  " + p1.distance(p2));
 
 Output:
 
@@ -29,11 +29,11 @@ Output:
    Point3D:	     0.00000      0.50000      0.50000
    Point3D:	     0.50000      0.50000     -0.50000
 
-   ditance =  1.118033988749895   
+   distance =  1.118033988749895
 
 Points can be used to construct lines in 3D. Line3D object also can calculate
 distance between two lines (considering them infinite), and returns Line3D object
-that connects the points on the initial lines at their closest approach. The lenght
+that connects the points on the initial lines at their closest approach. The length
 of the line will represent the closest distance between the lines and midpoint is
 the middle point of the closest approach.
 

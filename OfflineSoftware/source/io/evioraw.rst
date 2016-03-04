@@ -13,7 +13,7 @@ Reading Raw (DAQ) Files
 =======================
 
 Following are examples of groovy scripts used to read evio RAW data files. The examples 
-can be found in coatjava package in directory sctipts/evio.
+can be found in coatjava package in directory scripts/evio.
 To read raw files one must use:
 
 .. code-block:: java

@@ -86,7 +86,7 @@ of CLAS12 software and all the configuration files that the package needs.
 Downloading coatjava
 ====================
 
-The packaged tarball of complete package with neccessary software and files can be downloaded from:
+The packaged tarball of complete package with necessary software and files can be downloaded from:
 
 .. code-block:: bash
 

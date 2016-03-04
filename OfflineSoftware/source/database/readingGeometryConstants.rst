@@ -1,10 +1,10 @@
 
-.. _clas-geomtry:
+.. _clas-geometry:
 
 CLAS Geometry Database
 **********************
 
-CLAS geomtery uses the CCDB database for storing geometry parameters.
+CLAS geometry uses the CCDB database for storing geometry parameters.
 
 Getting Started with Database
 =============================

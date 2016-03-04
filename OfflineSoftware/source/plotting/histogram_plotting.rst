@@ -12,7 +12,7 @@ Histogram Drawing
    import org.root.func.*;
    import java.lang.Math;
 
-   // Define two histograms with Ttitle string
+   // Define two histograms with Title string
    H1D h1 = new H1D("h1","Random Function (Gaus + POL2)",200,0.0,14.0);
    H1D h2 = new H1D("h2","Second Random Function",200,0.0,14.0);
 
@@ -34,7 +34,7 @@ Histogram Drawing
    f1.setParameter(4,  7.0);
 
    // Declare a random number generator based on the function
-   // and fill the histograms with rundomly generated numbers
+   // and fill the histograms with randomly generated numbers
 
    RandomFunc rndm = new RandomFunc(f1);
 

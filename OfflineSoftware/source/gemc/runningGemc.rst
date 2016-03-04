@@ -69,7 +69,7 @@ The corresponding option in the gcard has a **name** **value** syntax like this:
 
 .. note::
 
- All command line options can be used in the gcard and viceversa.
+ All command line options can be used in the gcard and vice-versa.
 
 
 Loading / Unloading detectors
@@ -170,7 +170,7 @@ will invert and scale the torus, and halve the solenoid.
 
 .. note::
 
- By default the torus map has e- outbending. So in order to have e- in-bending the torus field has to be
+ By default the torus map has e- out-bending. So in order to have e- in-bending the torus field has to be
  scaled by -1 (done in the clas12 gcard).
 
 gemc options
@@ -213,7 +213,7 @@ Running clas12 simulation on a personal computer
 
 gemc can be installed on apple computers using the dmg found `here <https://gemc.jlab.org/gemc/Downloads.html>`_.
 
-For linux OSes a installation from source is required, that involves installing all the dependency libraries.
+For linux OS's a installation from source is required, that involves installing all the dependency libraries.
 Here are the `installation instructions <https://www.jlab.org/12gev_phys/packages/sources/ceInstall/1.2_install.html>`_
 
 
